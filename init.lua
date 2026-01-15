@@ -1,5 +1,6 @@
 -- This file simply bootstraps the installation of Lazy.nvim and then calls other files for execution
 -- This file doesn't necessarily need to be touched, BE CAUTIOUS editing this file and proceed at your own risk.
+
 local lazypath = vim.env.LAZY or vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 if not (vim.env.LAZY or (vim.uv or vim.loop).fs_stat(lazypath)) then
   -- stylua: ignore
@@ -25,8 +26,13 @@ vim.keymap.set("n", "<Down>", "gj", { noremap = true })
 vim.keymap.set("v", "<Up>", "gk", { noremap = true })
 vim.keymap.set("v", "<Down>", "gj", { noremap = true })
 
+-- vim.keymap.set("i", "<Down>", "pumvisible() and '<C-n>' or '<Down>'", { expr = true, noremap = true })
+-- vim.keymap.set("i", "<Up>", "pumvisible() and '<C-p>' or '<Up>'", { expr = true, noremap = true })
 -- This will remove any active search highlight until you initiate a new search.
 -- If you want to prevent the highlight from being persistent after each search, add this to your init.lua or init.vim:
 -- TODO: Cross-Check if this is necessary: Saturday 5 October 2024
 --
 vim.opt.hlsearch = false
+-- vim.lsp.enable { "rust-analyzer" }
+-- nmap <C-n> <Plug>(VM-Find-Under)
+-- vmap <C-n> <Plug>(VM-Find-Under)

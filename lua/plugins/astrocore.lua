@@ -1,4 +1,3 @@
-
 -- AstroCore provides a central place to modify mappings, vim options, autocommands, and more!
 -- Configuration documentation can be found with `:h astrocore`
 -- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
@@ -11,7 +10,7 @@ return {
   opts = {
     -- Configure core features of AstroNvim
     features = {
-      large_buf = { size = 1024 * 256, lines = 10000 }, -- set global limits for large files for disabling features like treesitter
+      large_buf = { size = 100024 * 256, lines = 100000 }, -- set global limits for large files for disabling features like treesitter
       autopairs = true, -- enable autopairs at start
       cmp = true, -- enable completion at start
       diagnostics = { virtual_text = false, virtual_lines = true }, -- diagnostic settings on startup
@@ -23,7 +22,8 @@ return {
       -- virtual_text = false,
       underline = true,
       virtual_lines = {
-      current_line=true},
+        current_line = true,
+      },
     },
     -- vim options can be configured here
     options = {

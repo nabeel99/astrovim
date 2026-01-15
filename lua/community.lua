@@ -53,6 +53,13 @@ return {
   -- { import = "astrocommunity.pack.docker" },
   { import = "astrocommunity.pack.helm" },
   -- { import = "astrocommunity.pack.html-css" },
+-- editing support
+
+
+  { import = "astrocommunity.search.nvim-spectre" },
+  { import = "astrocommunity.editing-support.vim-visual-multi" },
+
+  { import = "astrocommunity.editing-support.rustowl" },
 
   -- docker
   { import = "astrocommunity.docker.lazydocker" },
@@ -72,4 +79,6 @@ return {
   { import = "astrocommunity.colorscheme.tokyodark-nvim" },
   { import = "astrocommunity.colorscheme.catppuccin" },
   { import = "astrocommunity.recipes.picker-nvchad-theme" },
+  -- surround
+  { import = "astrocommunity.motion.nvim-surround" },
 }
