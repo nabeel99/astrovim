@@ -14,3 +14,12 @@ vim.filetype.add {
     ["~/%.config/foo/.*"] = "fooscript",
   },
 }
+
+-- Ensure onedark is set as the default colorscheme (runs after all plugins load)
+vim.api.nvim_create_autocmd("User", {
+  pattern = "AstroLspSetup",
+  once = true,
+  callback = function()
+    vim.cmd.colorscheme("onedark")
+  end,
+})

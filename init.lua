@@ -19,15 +19,18 @@ end
 require "lazy_setup"
 require "polish"
 require "mappings.rust"
+
+-- Fix terminal key codes to ensure arrow keys work properly
+-- This is especially important after exiting search mode
+vim.opt.ttyfast = true
+vim.opt.ttimeout = true
+vim.opt.ttimeoutlen = 100
+
 vim.keymap.set("n", "<Up>", "gk", { noremap = true })
 vim.keymap.set("n", "<Down>", "gj", { noremap = true })
--- vim.keymap.set('i', '<Up>', 'gk', { noremap = true })
--- vim.keymap.set('i', '<Down>', 'gj', { noremap = true })
 vim.keymap.set("v", "<Up>", "gk", { noremap = true })
 vim.keymap.set("v", "<Down>", "gj", { noremap = true })
 
--- vim.keymap.set("i", "<Down>", "pumvisible() and '<C-n>' or '<Down>'", { expr = true, noremap = true })
--- vim.keymap.set("i", "<Up>", "pumvisible() and '<C-p>' or '<Up>'", { expr = true, noremap = true })
 -- This will remove any active search highlight until you initiate a new search.
 -- If you want to prevent the highlight from being persistent after each search, add this to your init.lua or init.vim:
 -- TODO: Cross-Check if this is necessary: Saturday 5 October 2024

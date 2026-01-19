@@ -2,6 +2,7 @@ return {
   "armannikoyan/rusty",
   lazy = false,
   priority = 1000,
+  enabled = false, -- Disabled to use onedark as default colorscheme
   opts = {
     transparent = true,
     italic_comments = true,
