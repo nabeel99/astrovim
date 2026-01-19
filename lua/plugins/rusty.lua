@@ -9,6 +9,6 @@ return {
   },
   config = function(_, opts)
     require("rusty").setup(opts)
-    vim.cmd "colorscheme rusty"
+    -- vim.cmd "colorscheme rusty" -- Commented out to use onedark as default
   end,
 }

@@ -50,6 +50,6 @@ return {
     }
 
     -- setup must be called before loading
-    vim.cmd "colorscheme github_dark"
+    -- vim.cmd "colorscheme github_dark" -- Commented out to use onedark as default
   end,
 }

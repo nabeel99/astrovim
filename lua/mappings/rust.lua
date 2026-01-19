@@ -22,11 +22,10 @@ wk.add {
   { "<leader>kks", ":RustLsp ssr<CR>", desc = "Structural search replace" },
   { "<leader>kkg", ":RustLsp crateGraph<CR>", desc = "Crate graph" },
   { "<leader>kkS", ":RustLsp syntaxTree<CR>", desc = "Syntax tree" },
-  { "<leader>kkm", ":RustFmt<CR>", desc = "Format file" },
   { "<leader>kkf", ":RustFmt<CR>", desc = "Format file" },
   { "<leader>kkx", ":RustLsp flyCheck<CR>", desc = "Fly check" },
   { "<leader>kkX", ":RustAnalyzer restart<CR>", desc = "Restart Rust Analyzer" },
-  { "<leader>kkA", ":RustAnalyzer start<CR>", desc = "Start Rust Analyzer" },
+  { "<leader>kkm", ":RustAnalyzer start<CR>", desc = "Start Rust Analyzer" },
   { "<leader>kkv", ":RustLsp view hir<CR>", desc = "View HIR" },
   { "<leader>kkV", ":RustLsp view mir<CR>", desc = "View MIR" },
 }

@@ -1,7 +1,7 @@
 -- Using Lazy
 return {
   "navarasu/onedark.nvim",
-  priority = 1000, -- make sure to load this before all the other start plugins
+  priority = 1011, -- make sure to load this after other colorscheme plugins to ensure it's the default
   config = function()
     require('onedark').setup {
       style = 'darker'
