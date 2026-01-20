@@ -16,7 +16,9 @@ end
 
 ---@type vim.lsp.Config
 return {
-  cmd = { "rust-analyzer" },
+  -- If you want to use lspmux with rust-analyzer, set the LSP command to run via lspmux.
+  -- This typically looks like: `lspmux rust-analyzer`
+  cmd = { "lspmux", "rust-analyzer" },
   filetypes = { "rust" },
 
   -- IMPORTANT:
@@ -38,6 +40,7 @@ return {
 
   settings = {
     ["rust-analyzer"] = {
+      cargo = {},
       lens = {
         debug = { enable = true },
         enable = true,

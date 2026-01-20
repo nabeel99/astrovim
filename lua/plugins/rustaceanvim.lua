@@ -1,7 +1,7 @@
 return {
   {
     "mrcjkb/rustaceanvim", -- add lsp plugin
-    version = "^6", -- Recommended
+    version = "^7", -- Recommended
     lazy = false, -- This plugin is already lazy
     opts = function(_, opts)
       local astrolsp_avail, astrolsp = pcall(require, "astrolsp")
