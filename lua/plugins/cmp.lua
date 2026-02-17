@@ -1,6 +1,3 @@
-
-
-
 return {
   "hrsh7th/nvim-cmp",
   opts = function(_, opts)
@@ -11,8 +8,6 @@ return {
         select = true,
         behavior = cmp.ConfirmBehavior.Insert,
       }),
-      -- Fix arrow key navigation in completion menu
-      -- This ensures arrow keys work properly even after exiting search mode
       ["<Down>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
@@ -28,6 +23,25 @@ return {
         end
       end, { "i", "s" }),
     }))
+
+    -- Disable cmp while vim-visual-multi is active.
+    -- VM takes over insert-mode keymaps during multi-cursor editing;
+    -- when it exits it does not restore cmp's mappings, which breaks
+    -- arrow-key navigation in the completion menu.
+    -- The clean fix: turn cmp off for the buffer while VM is running,
+    -- then turn it back on when VM exits.
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "visual_multi_start",
+      callback = function()
+        cmp.setup.buffer({ enabled = false })
+      end,
+    })
+
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "visual_multi_exit",
+      callback = function()
+        cmp.setup.buffer({ enabled = true })
+      end,
+    })
   end,
 }
-

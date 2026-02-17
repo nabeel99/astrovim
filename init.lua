@@ -20,16 +20,9 @@ require "lazy_setup"
 require "polish"
 require "mappings.rust"
 
--- Fix terminal key codes to ensure arrow keys work properly
--- This is especially important after exiting search mode
-vim.opt.ttyfast = true
-vim.opt.ttimeout = true
-vim.opt.ttimeoutlen = 100
-
-vim.keymap.set("n", "<Up>", "gk", { noremap = true })
-vim.keymap.set("n", "<Down>", "gj", { noremap = true })
-vim.keymap.set("v", "<Up>", "gk", { noremap = true })
-vim.keymap.set("v", "<Down>", "gj", { noremap = true })
+-- Navigate wrapped lines with arrow keys
+vim.keymap.set({ "n", "v" }, "<Up>", "gk", { noremap = true })
+vim.keymap.set({ "n", "v" }, "<Down>", "gj", { noremap = true })
 
 -- This will remove any active search highlight until you initiate a new search.
 -- If you want to prevent the highlight from being persistent after each search, add this to your init.lua or init.vim:

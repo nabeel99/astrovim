@@ -1,6 +1,5 @@
-
-local wk = require("which-key")
-wk.add({
+local wk = require "which-key"
+wk.add {
   { "<leader>km", group = "Multiselect Visually" }, -- group for visual multi commands
   { "<leader>kmm", "<Plug>(VM-Find-Under)", desc = "Find Under Cursor" },
   { "<leader>kmM", "<Plug>(VM-Find-Subword-Under)", desc = "Find Subword Under Cursor" },
@@ -23,5 +22,4 @@ wk.add({
   -- { "<leader><D-u>", "<Plug>(VM-Add-Cursor-Up)", desc = "Add Cursor Up" },
   -- { "<leader><C-Down>", "<Plug>(VM-Add-Cursor-Down)", desc = "Add Cursor Down" },
   -- { "<leader><C-Up>", "<Plug>(VM-Add-Cursor-Up)", desc = "Add Cursor Up" },
-})
-
+}
