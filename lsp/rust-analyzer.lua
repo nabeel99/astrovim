@@ -41,6 +41,9 @@ return {
   settings = {
     ["rust-analyzer"] = {
       cargo = {},
+      check = {
+        command = "clippy",
+      },
       lens = {
         debug = { enable = true },
         enable = true,

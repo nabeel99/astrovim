@@ -38,6 +38,18 @@ return {
         -- configure global vim variables (vim.g)
         -- NOTE: `mapleader` and `maplocalleader` must be set in the AstroNvim opts or before `lazy.setup`
         -- This can be found in the `lua/lazy_setup.lua` file
+
+        -- Prevent vim-visual-multi from hijacking insert-mode arrow keys.
+        -- VM creates buffer-local imaps for <Up>/<Down> which overwrite
+        -- nvim-cmp's completion navigation mappings.  When VM exits it
+        -- unmaps its own bindings but never restores the originals, so
+        -- cmp's arrow-key handling is permanently broken for that buffer.
+        -- Setting these to empty strings tells VM to skip those mappings.
+        VM_maps = {
+          ["I Up Arrow"] = "",
+          ["I Down Arrow"] = "",
+          ["I Return"] = "",
+        },
       },
     },
     -- Mappings can be configured through AstroCore as well.
