@@ -1,0 +1,36 @@
+return {
+  "folke/which-key.nvim",
+  opts = function(_, opts)
+    opts.spec = opts.spec or {}
+    vim.list_extend(opts.spec, {
+      { "<leader>kk", group = "Rust", mode = "n" },
+      { "<leader>kkd", ":<C-u>RustLsp debuggables<CR>", desc = "List debug targets", mode = "n" },
+      { "<leader>kkD", ":<C-u>RustLsp debug<CR>", desc = "Start debug session", mode = "n" },
+      { "<leader>kkr", ":<C-u>RustLsp runnables<CR>", desc = "List run targets", mode = "n" },
+      { "<leader>kkR", ":<C-u>RustLsp run<CR>", desc = "Run target", mode = "n" },
+      { "<leader>kkt", ":<C-u>RustLsp testables<CR>", desc = "List test targets", mode = "n" },
+      { "<leader>kkT", ":<C-u>RustLsp test<CR>", desc = "Run tests", mode = "n" },
+      { "<leader>kkk", ":<C-u>RustLsp expandMacro<CR>", desc = "Expand macros recursively", mode = "n" },
+      { "<leader>kkp", ":<C-u>RustLsp rebuildProcMacros<CR>", desc = "Rebuild procedural macros", mode = "n" },
+      { "<leader>kku", ":<C-u>RustLsp moveItem up<CR>", desc = "Move item up", mode = "n" },
+      { "<leader>kkn", ":<C-u>RustLsp moveItem down<CR>", desc = "Move item down", mode = "n" },
+      { "<leader>kkc", ":<C-u>RustLsp codeAction<CR>", desc = "Code actions", mode = "n" },
+      { "<leader>kkh", ":<C-u>RustLsp hover actions<CR>", desc = "Hover actions", mode = "n" },
+      { "<leader>kke", ":<C-u>RustLsp explainError<CR>", desc = "Explain error", mode = "n" },
+      { "<leader>kkE", ":<C-u>RustLsp renderDiagnostic current<CR>", desc = "Render Error diagnostic", mode = "n" },
+      { "<leader>kkC", ":<C-u>RustLsp openCargo<CR>", desc = "Open Cargo.toml", mode = "n" },
+      { "<leader>kko", ":<C-u>RustLsp openDocs<CR>", desc = "Open online docs", mode = "n" },
+      { "<leader>kkP", ":<C-u>RustLsp parentModule<CR>", desc = "Parent module", mode = "n" },
+      { "<leader>kkj", ":<C-u>RustLsp joinLines<CR>", desc = "Join lines", mode = "n" },
+      { "<leader>kks", ":<C-u>RustLsp ssr<CR>", desc = "Structural search replace", mode = "n" },
+      { "<leader>kkg", ":<C-u>RustLsp crateGraph<CR>", desc = "Crate graph", mode = "n" },
+      { "<leader>kkS", ":<C-u>RustLsp syntaxTree<CR>", desc = "Syntax tree", mode = "n" },
+      { "<leader>kkf", ":<C-u>RustFmt<CR>", desc = "Format file", mode = "n" },
+      { "<leader>kkx", ":<C-u>RustLsp flyCheck<CR>", desc = "Fly check", mode = "n" },
+      { "<leader>kkX", ":<C-u>RustAnalyzer restart<CR>", desc = "Restart Rust Analyzer", mode = "n" },
+      { "<leader>kkm", ":<C-u>RustAnalyzer start<CR>", desc = "Start Rust Analyzer", mode = "n" },
+      { "<leader>kkv", ":<C-u>RustLsp view hir<CR>", desc = "View HIR", mode = "n" },
+      { "<leader>kkV", ":<C-u>RustLsp view mir<CR>", desc = "View MIR", mode = "n" },
+    })
+  end,
+}
