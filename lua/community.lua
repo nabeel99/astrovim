@@ -11,6 +11,9 @@
 ---@type LazySpec
 return {
   "AstroNvim/astrocommunity",
+  -- AI
+  { import = "astrocommunity.ai.opencode-nvim" },
+  --
   { import = "astrocommunity.pack.lua" },
   { import = "astrocommunity.pack.rust" },
   -- Python: base/black/isort only — no basedpyright (LSP is ty in lua/plugins/astrolsp.lua)
@@ -25,7 +28,7 @@ return {
   -- { import = "astrocommunity.pack.python-ruff" },
   -- { import = "astrocommunity.pack.cs" },
   -- { import = "astrocommunity.pack.sql" },
-  { import = "astrocommunity.pack.go" },
+  -- { import = "astrocommunity.pack.go" },
   -- { import = "astrocommunity.pack.java" },
   -- { import = "astrocommunity.pack.php" },
   { import = "astrocommunity.pack.julia" },
@@ -61,8 +64,7 @@ return {
   -- { import = "astrocommunity.pack.docker" },
   { import = "astrocommunity.pack.helm" },
   -- { import = "astrocommunity.pack.html-css" },
--- editing support
-
+  -- editing support
 
   { import = "astrocommunity.search.nvim-spectre" },
   { import = "astrocommunity.editing-support.vim-visual-multi" },
