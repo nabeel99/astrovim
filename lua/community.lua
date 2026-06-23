@@ -12,6 +12,7 @@
 return {
   "AstroNvim/astrocommunity",
   -- AI
+  { import = "astrocommunity.recipes.ai" },
   { import = "astrocommunity.ai.opencode-nvim" },
   --
   { import = "astrocommunity.pack.lua" },

@@ -40,11 +40,74 @@ return {
 
   settings = {
     ["rust-analyzer"] = {
+      -- Run cargo check automatically on save.
+      checkOnSave = true,
+
+      -- Hide rust-analyzer request-failure popups; details stay available in the rust-analyzer logs.
+      showRequestFailedErrorNotification = false,
+
       cargo = {
-        -- features = { "testing" },
+        -- NOTE: cargo.features is intentionally not set here.
+        -- Enable features per-project via codesettings.nvim, e.g. in .vscode/settings.json:
+        --   { "rust-analyzer.cargo.features": ["testing"] }
+        -- Avoid analyzing tests, benches, examples, and other non-default cargo targets.
+        allTargets = false,
+        -- Keep rust-analyzer build artifacts separate from normal cargo builds.
+        targetDir = "target/rust-analyzer",
+        buildScripts = {
+          -- Keep build scripts enabled so rust-analyzer can see generated code and proc-macro output.
+          enable = true,
+          -- Do not rerun build scripts just because build.rs or proc-macro sources change.
+          rebuildOnSave = false,
+        },
+        -- Build scripts need local dev tools for macro/generated-code navigation; this points
+        -- rust-analyzer at them. macOS/Homebrew: brew install openssl@3 protobuf llvm.
+        -- When sharing this file, keep the shape but replace these paths with local ones.
+        extraEnv = {
+          OPENSSL_NO_VENDOR = "1",
+          OPENSSL_DIR = "/opt/homebrew/opt/openssl@3",
+          PROTOC = "/opt/homebrew/opt/protobuf/bin/protoc",
+          CC = "/opt/homebrew/opt/llvm/bin/clang",
+          CXX = "/opt/homebrew/opt/llvm/bin/clang++",
+          AR = "/opt/homebrew/opt/llvm/bin/llvm-ar",
+          RANLIB = "/opt/homebrew/opt/llvm/bin/llvm-ranlib",
+          SDKROOT = "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+        },
       },
       check = {
         command = "clippy",
+        -- Avoid analyzing non-default cargo targets when checking.
+        allTargets = false,
+        -- If checking is manually triggered, check the current package instead of the full workspace.
+        workspace = false,
+        -- Same dependency env for manual checks; keep in sync with cargo.extraEnv above.
+        extraEnv = {
+          OPENSSL_NO_VENDOR = "1",
+          OPENSSL_DIR = "/opt/homebrew/opt/openssl@3",
+          PROTOC = "/opt/homebrew/opt/protobuf/bin/protoc",
+          CC = "/opt/homebrew/opt/llvm/bin/clang",
+          CXX = "/opt/homebrew/opt/llvm/bin/clang++",
+          AR = "/opt/homebrew/opt/llvm/bin/llvm-ar",
+          RANLIB = "/opt/homebrew/opt/llvm/bin/llvm-ranlib",
+          SDKROOT = "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+        },
+      },
+      -- Keep eager cache priming enabled so references/definitions are ready sooner after startup.
+      cachePriming = { enable = true },
+      -- Keep procedural macro expansion enabled for better navigation through macro-heavy code.
+      procMacro = { enable = true },
+      -- Exclude tests from references/call hierarchy results.
+      references = { excludeTests = true },
+      -- Don't analyze large generated/build folders (LSP equivalent of VS Code's files/search excludes).
+      files = {
+        excludeDirs = {
+          "target",
+          "node_modules",
+          "test-ledger",
+          "localnet-ledger",
+          "validator-ledger",
+          "tmp",
+        },
       },
       lens = {
         debug = { enable = true },
@@ -63,6 +126,9 @@ return {
   },
 
   before_init = function(init_params, config)
+    -- Project-local settings (e.g. lspsettings.json / .vscode/settings.json) are merged
+    -- automatically by rustaceanvim via codesettings.nvim when that plugin is installed,
+    -- so no manual call is needed here.
     if config.settings and config.settings["rust-analyzer"] then
       init_params.initializationOptions = config.settings["rust-analyzer"]
     end
