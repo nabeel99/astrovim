@@ -62,6 +62,10 @@ return {
         ["]b"] = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
         ["[b"] = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },
 
+        -- override AstroNvim's default lazygit mapping to use Neogit instead;
+        -- <Leader>tl is left as AstroNvim's default (ToggleTerm lazygit) for comparison
+        ["<Leader>gg"] = { function() require("neogit").open() end, desc = "Neogit" },
+
         -- mappings seen under group name "Buffer"
         ["<Leader>bd"] = {
           function()

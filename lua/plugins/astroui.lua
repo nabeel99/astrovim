@@ -1,5 +1,3 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
-
 -- AstroUI provides the basis for configuring the AstroNvim User Interface
 -- Configuration documentation can be found with `:h astroui`
 -- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
@@ -11,14 +9,19 @@ return {
   ---@type AstroUIOpts
   opts = {
     -- change colorscheme
-    colorscheme = "astrodark",
+    colorscheme = "gruvbox-dark-hard",
     -- AstroUI allows you to easily modify highlight groups easily for any and all colorschemes
     highlights = {
       init = { -- this table overrides highlights in all themes
-        -- Normal = { bg = "#000000" },
-      },
-      astrodark = { -- a table of overrides/changes when applying the astrotheme theme
-        -- Normal = { bg = "#000000" },
+        WinSeparator = { fg = "#131313" },
+        Comment = { fg = "#fe8019", ctermfg = 9 },
+        LspSignatureActiveParameter = { link = "PMenu", bold = true },
+        -- kill non-gruvbox leaks from AstroUI/snacks/etc
+        NormalFloat = { fg = "#d5c4a1", bg = "#3c3836" },
+        FloatBorder = { fg = "#504945", bg = "#3c3836" },
+        FloatTitle = { fg = "#fabd2f", bg = "#3c3836", bold = true },
+        CurSearch = { fg = "#3c3836", bg = "#fabd2f" },
+        PMenuThumb = { bg = "#665c54" },
       },
     },
     -- Icons can be configured throughout the interface
