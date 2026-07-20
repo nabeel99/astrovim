@@ -11,15 +11,70 @@ return {
     -- change colorscheme
     colorscheme = "gruvbox-dark-hard",
     -- AstroUI allows you to easily modify highlight groups easily for any and all colorschemes
+    -- highlights = {
+    --   init = { -- this table overrides highlights in all themes
+    --     WinSeparator = { fg = "#131313" },
+    --     Comment = { fg = "#fe8019", ctermfg = 9 },
+    --     LspSignatureActiveParameter = { link = "PMenu", bold = true },
+    --     -- kill non-gruvbox leaks from AstroUI/snacks/etc
+    --     NormalFloat = { fg = "#d5c4a1", bg = "#3c3836" },
+    --     FloatBorder = { fg = "#504945", bg = "#3c3836" },
+    --     FloatTitle = { fg = "#fabd2f", bg = "#3c3836", bold = true },
+    --     CurSearch = { fg = "#3c3836", bg = "#fabd2f" },
+    --     PMenuThumb = { bg = "#665c54" },
+    --   },
+    -- },
+
     highlights = {
-      init = { -- this table overrides highlights in all themes
+      init = {
+        -- Muted syntax colours
+        Identifier = { fg = "#cc554d" },
+        Function = { fg = "#cc554d" },
+        Statement = { fg = "#cc554d" },
+        Keyword = { fg = "#cc554d" },
+        StorageClass = { fg = "#cc554d" },
+        ["@keyword"] = { fg = "#cc554d" },
+        ["@keyword.modifier"] = { fg = "#cc554d" },
+        -- Tree-sitter equivalents
+        ["@variable"] = { fg = "#cc554d" },
+        ["@function"] = { fg = "#cc554d" },
+        ["@function.call"] = { fg = "#cc554d" },
+
+        Cursor = {
+          fg = "#1d2021",
+          bg = "#d5c4a1",
+        },
+
+        lCursor = {
+          fg = "#1d2021",
+          bg = "#d5c4a1",
+        },
+
+        CursorIM = {
+          fg = "#1d2021",
+          bg = "#d5c4a1",
+        },
+
+        TermCursor = {
+          fg = "#1d2021",
+          bg = "#d5c4a1",
+        },
         WinSeparator = { fg = "#131313" },
         Comment = { fg = "#fe8019", ctermfg = 9 },
-        LspSignatureActiveParameter = { link = "PMenu", bold = true },
-        -- kill non-gruvbox leaks from AstroUI/snacks/etc
+
+        LspSignatureActiveParameter = {
+          link = "PMenu",
+          bold = true,
+        },
+
         NormalFloat = { fg = "#d5c4a1", bg = "#3c3836" },
         FloatBorder = { fg = "#504945", bg = "#3c3836" },
-        FloatTitle = { fg = "#fabd2f", bg = "#3c3836", bold = true },
+        FloatTitle = {
+          fg = "#fabd2f",
+          bg = "#3c3836",
+          bold = true,
+        },
+
         CurSearch = { fg = "#3c3836", bg = "#fabd2f" },
         PMenuThumb = { bg = "#665c54" },
       },
