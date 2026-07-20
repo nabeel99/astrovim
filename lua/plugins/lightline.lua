@@ -1,7 +1,5 @@
 return {
-  "itchyny/lightline.vim",
-  lazy = false,
-  config = function()
+  { "itchyny/lightline.vim", lazy = false, config = function()
     vim.o.showmode = false
     vim.g.lightline = {
       active = {
@@ -34,5 +32,6 @@ return {
       ]],
       true
     )
-  end,
+  end },
+  { "rebelot/heirline.nvim", enabled = false },
 }
