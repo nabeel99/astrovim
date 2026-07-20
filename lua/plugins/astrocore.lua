@@ -6,9 +6,6 @@
 return {
   "AstroNvim/astrocore",
 
-  -- Jon disables LSP semantic-token colouring and does not use
-  -- Tree-sitter highlighting for Rust. These two changes are important
-  -- when trying to reproduce his Rust syntax colours.
   init = function()
     local group = vim.api.nvim_create_augroup("JonGjengsetStyle", { clear = true })
 
@@ -16,18 +13,15 @@ return {
       group = group,
       callback = function(args)
         local client = vim.lsp.get_client_by_id(args.data.client_id)
-        if not client then return end
 
-        -- Disable semantic tokens for this client/buffer.
-        if vim.lsp.semantic_tokens and vim.lsp.semantic_tokens.enable then
-          vim.lsp.semantic_tokens.enable(false, {
-            bufnr = args.buf,
-            client_id = client.id,
-          })
+        -- Disable LSP semantic highlighting without calling
+        -- vim.lsp.semantic_tokens.enable(), avoiding the Neovim 0.12
+        -- bufnr/client_id filter assertion entirely.
+        if client then
+          client.server_capabilities.semanticTokensProvider = nil
         end
-        client.server_capabilities.semanticTokensProvider = nil
 
-        -- Jon also keeps inlay hints disabled.
+        -- Keep inlay hints disabled for this buffer.
         if vim.lsp.inlay_hint and vim.lsp.inlay_hint.enable then
           vim.lsp.inlay_hint.enable(false, { bufnr = args.buf })
         end
@@ -41,7 +35,7 @@ return {
         vim.schedule(function()
           if not vim.api.nvim_buf_is_valid(args.buf) then return end
 
-          -- Use Vim's traditional Rust syntax groups, as in Jon's setup.
+          -- Use Vim's traditional Rust syntax groups.
           pcall(vim.treesitter.stop, args.buf)
           vim.bo[args.buf].syntax = "rust"
         end)
@@ -84,17 +78,11 @@ return {
         spell = false,
         signcolumn = "yes",
         wrap = false,
-
         background = "dark",
         termguicolors = true,
-
-        -- The reference has no full-width current-line highlight.
         cursorline = false,
-
-        -- AstroNvim's statusline already displays NORMAL/VISUAL/INSERT.
         showmode = false,
 
-        -- Block cursor in Normal/Visual mode; vertical cursor in Insert mode.
         guicursor = table.concat({
           "n-v-c:block-Cursor",
           "i-ci-ve:ver25-Cursor",
@@ -134,4 +122,3 @@ return {
     },
   },
 }
-
