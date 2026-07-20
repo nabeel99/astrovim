@@ -1,37 +1,82 @@
--- Make AstroNvim's nvim-cmp completion popup resemble Jon Gjengset's:
--- a plain, borderless menu with completion text and a textual kind column.
+-- Replace AstroNvim's Blink completion UI with the same plain nvim-cmp
+-- setup used by Jon Gjengset: no border, no icons, no custom formatting.
 
 ---@type LazySpec
 return {
+  -- AstroNvim v6 uses Blink by default. Only one completion engine should run.
+  {
+    "saghen/blink.cmp",
+    enabled = false,
+  },
+
   {
     "hrsh7th/nvim-cmp",
+    event = "InsertEnter",
+
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-path",
+    },
+
+    config = function()
+      local cmp = require "cmp"
+
+      cmp.setup {
+        snippet = {
+          expand = function(args) vim.snippet.expand(args.body) end,
+        },
+
+        mapping = cmp.mapping.preset.insert {
+          ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+          ["<C-f>"] = cmp.mapping.scroll_docs(4),
+          ["<C-Space>"] = cmp.mapping.complete(),
+          ["<C-e>"] = cmp.mapping.abort(),
+
+          -- Match Jon's behavior: Enter accepts the selected item.
+          ["<CR>"] = cmp.mapping.confirm {
+            select = true,
+            behavior = cmp.ConfirmBehavior.Insert,
+          },
+        },
+
+        -- Jon uses LSP completion first and paths second.
+        sources = cmp.config.sources({
+          { name = "nvim_lsp" },
+        }, {
+          { name = "path" },
+        }),
+
+        -- Intentionally omit `window` and `formatting`.
+        -- This produces nvim-cmp's plain borderless Pmenu with textual kinds.
+        experimental = {
+          ghost_text = true,
+        },
+      }
+
+      -- Match Jon's path completion in command-line mode.
+      cmp.setup.cmdline(":", {
+        sources = cmp.config.sources {
+          { name = "path" },
+        },
+      })
+    end,
+  },
+
+  -- Advertise nvim-cmp completion capabilities to every AstroLSP server.
+  {
+    "AstroNvim/astrolsp",
+    optional = true,
 
     opts = function(_, opts)
-      -- Remove AstroNvim's bordered/custom floating-window presentation.
-      -- nvim-cmp will fall back to its native borderless Pmenu appearance.
-      opts.window = nil
-      opts.view = nil
+      opts.config = opts.config or {}
+      opts.config["*"] = opts.config["*"] or {}
 
-      opts.completion = {
-        completeopt = "menu,menuone,noselect",
-      }
-
-      -- Remove Nerd Font icons and source labels. Jon's menu shows entries
-      -- such as `OutputFile                         Struct`.
-      opts.formatting = {
-        fields = { "abbr", "kind" },
-        expandable_indicator = false,
-
-        format = function(_, item)
-          item.menu = ""
-          return item
-        end,
-      }
-
-      opts.experimental = opts.experimental or {}
-      opts.experimental.ghost_text = true
-
-      return opts
+      opts.config["*"].capabilities = vim.tbl_deep_extend(
+        "force",
+        opts.config["*"].capabilities or {},
+        require("cmp_nvim_lsp").default_capabilities()
+      )
     end,
   },
 }
+

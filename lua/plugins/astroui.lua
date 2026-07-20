@@ -42,7 +42,23 @@ return {
         FloatTitle = { fg = "#fabd2f", bg = "#3c3836", bold = true },
 
         CurSearch = { fg = "#3c3836", bg = "#fabd2f" },
-        PMenuThumb = { bg = "#665c54" },
+        Pmenu = {
+          fg = "#d5c4a1",
+          bg = "#3c3836",
+        },
+
+        PmenuSel = {
+          fg = "#d5c4a1",
+          bg = "#504945",
+        },
+
+        PmenuSbar = {
+          bg = "#3c3836",
+        },
+
+        PmenuThumb = {
+          bg = "#665c54",
+        },
       },
     },
 
@@ -60,4 +76,3 @@ return {
     },
   },
 }
-
