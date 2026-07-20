@@ -1,87 +1,52 @@
 -- AstroUI provides the basis for configuring the AstroNvim User Interface
--- Configuration documentation can be found with `:h astroui`
--- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
---       as this provides autocomplete and documentation while editing
+-- Configuration documentation: :h astroui
 
 ---@type LazySpec
 return {
   "AstroNvim/astroui",
   ---@type AstroUIOpts
   opts = {
-    -- change colorscheme
     colorscheme = "gruvbox-dark-hard",
-    -- AstroUI allows you to easily modify highlight groups easily for any and all colorschemes
-    -- highlights = {
-    --   init = { -- this table overrides highlights in all themes
-    --     WinSeparator = { fg = "#131313" },
-    --     Comment = { fg = "#fe8019", ctermfg = 9 },
-    --     LspSignatureActiveParameter = { link = "PMenu", bold = true },
-    --     -- kill non-gruvbox leaks from AstroUI/snacks/etc
-    --     NormalFloat = { fg = "#d5c4a1", bg = "#3c3836" },
-    --     FloatBorder = { fg = "#504945", bg = "#3c3836" },
-    --     FloatTitle = { fg = "#fabd2f", bg = "#3c3836", bold = true },
-    --     CurSearch = { fg = "#3c3836", bg = "#fabd2f" },
-    --     PMenuThumb = { bg = "#665c54" },
-    --   },
-    -- },
 
     highlights = {
       init = {
-        -- Muted syntax colours
-        Identifier = { fg = "#cc554d" },
-        Function = { fg = "#cc554d" },
-        Statement = { fg = "#cc554d" },
-        Keyword = { fg = "#cc554d" },
-        StorageClass = { fg = "#cc554d" },
-        ["@keyword"] = { fg = "#cc554d" },
-        ["@keyword.modifier"] = { fg = "#cc554d" },
-        -- Tree-sitter equivalents
-        ["@variable"] = { fg = "#cc554d" },
-        ["@function"] = { fg = "#cc554d" },
-        ["@function.call"] = { fg = "#cc554d" },
+        -- Core editor palette
+        Normal = { fg = "#d5c4a1", bg = "#1d2021" },
+        NormalNC = { fg = "#d5c4a1", bg = "#1d2021" },
 
-        Cursor = {
-          fg = "#1d2021",
-          bg = "#d5c4a1",
-        },
-
-        lCursor = {
-          fg = "#1d2021",
-          bg = "#d5c4a1",
-        },
-
-        CursorIM = {
-          fg = "#1d2021",
-          bg = "#d5c4a1",
-        },
-
-        TermCursor = {
-          fg = "#1d2021",
-          bg = "#d5c4a1",
-        },
+        -- Jon Gjengset uses a very dark window separator.
         WinSeparator = { fg = "#131313" },
-        Comment = { fg = "#fe8019", ctermfg = 9 },
 
-        LspSignatureActiveParameter = {
-          link = "PMenu",
-          bold = true,
-        },
+        -- In Jon's config, Comment receives the Boolean highlight.
+        Comment = { link = "Boolean" },
 
+        -- Warm Gruvbox block cursor.
+        Cursor = { fg = "#1d2021", bg = "#d5c4a1" },
+        lCursor = { fg = "#1d2021", bg = "#d5c4a1" },
+        CursorIM = { fg = "#1d2021", bg = "#d5c4a1" },
+        TermCursor = { fg = "#1d2021", bg = "#d5c4a1" },
+
+        -- Visual selection and the permanently shaded number/sign gutter.
+        Visual = { bg = "#504945" },
+        LineNr = { fg = "#665c54", bg = "#3c3836" },
+        CursorLineNr = { fg = "#bdae93", bg = "#3c3836", bold = false },
+        SignColumn = { fg = "#665c54", bg = "#3c3836" },
+        FoldColumn = { fg = "#665c54", bg = "#3c3836" },
+
+        -- Make the active signature argument clearly visible.
+        LspSignatureActiveParameter = { link = "PMenu", bold = true },
+
+        -- Keep AstroNvim/Snacks floating windows inside the same palette.
         NormalFloat = { fg = "#d5c4a1", bg = "#3c3836" },
         FloatBorder = { fg = "#504945", bg = "#3c3836" },
-        FloatTitle = {
-          fg = "#fabd2f",
-          bg = "#3c3836",
-          bold = true,
-        },
+        FloatTitle = { fg = "#fabd2f", bg = "#3c3836", bold = true },
 
         CurSearch = { fg = "#3c3836", bg = "#fabd2f" },
         PMenuThumb = { bg = "#665c54" },
       },
     },
-    -- Icons can be configured throughout the interface
+
     icons = {
-      -- configure the loading of the lsp in the status line
       LSPLoading1 = "⠋",
       LSPLoading2 = "⠙",
       LSPLoading3 = "⠹",
@@ -95,3 +60,4 @@ return {
     },
   },
 }
+

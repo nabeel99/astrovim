@@ -1,31 +1,71 @@
-
--- AstroCore provides a central place to modify mappings, vim options, autocommands, and more!
--- Configuration documentation can be found with `:h astrocore`
--- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
---       as this provides autocomplete and documentation while editing
+-- AstroCore provides a central place to modify mappings, Vim options,
+-- autocommands, and more.
+-- Configuration documentation: :h astrocore
 
 ---@type LazySpec
 return {
   "AstroNvim/astrocore",
+
+  -- Jon disables LSP semantic-token colouring and does not use
+  -- Tree-sitter highlighting for Rust. These two changes are important
+  -- when trying to reproduce his Rust syntax colours.
+  init = function()
+    local group = vim.api.nvim_create_augroup("JonGjengsetStyle", { clear = true })
+
+    vim.api.nvim_create_autocmd("LspAttach", {
+      group = group,
+      callback = function(args)
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        if not client then return end
+
+        -- Disable semantic tokens for this client/buffer.
+        if vim.lsp.semantic_tokens and vim.lsp.semantic_tokens.enable then
+          vim.lsp.semantic_tokens.enable(false, {
+            bufnr = args.buf,
+            client_id = client.id,
+          })
+        end
+        client.server_capabilities.semanticTokensProvider = nil
+
+        -- Jon also keeps inlay hints disabled.
+        if vim.lsp.inlay_hint and vim.lsp.inlay_hint.enable then
+          vim.lsp.inlay_hint.enable(false, { bufnr = args.buf })
+        end
+      end,
+    })
+
+    vim.api.nvim_create_autocmd("FileType", {
+      group = group,
+      pattern = "rust",
+      callback = function(args)
+        vim.schedule(function()
+          if not vim.api.nvim_buf_is_valid(args.buf) then return end
+
+          -- Use Vim's traditional Rust syntax groups, as in Jon's setup.
+          pcall(vim.treesitter.stop, args.buf)
+          vim.bo[args.buf].syntax = "rust"
+        end)
+      end,
+    })
+  end,
+
   ---@type AstroCoreOpts
   opts = {
-    -- Configure core features of AstroNvim
     features = {
-      large_buf = { size = 1024 * 256, lines = 10000 }, -- set global limits for large files for disabling features like treesitter
-      autopairs = true, -- enable autopairs at start
-      cmp = true, -- enable completion at start
-      diagnostics = { virtual_text = true, virtual_lines = false }, -- diagnostic settings on startup
-      highlighturl = true, -- highlight URLs at start
-      notifications = true, -- enable notifications at start
+      large_buf = { size = 1024 * 256, lines = 10000 },
+      autopairs = true,
+      cmp = true,
+      diagnostics = { virtual_text = true, virtual_lines = false },
+      highlighturl = true,
+      notifications = true,
     },
-    -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
+
     diagnostics = {
       virtual_text = true,
       underline = true,
     },
-    -- passed to `vim.filetype.add`
+
     filetypes = {
-      -- see `:h vim.filetype.add` for usage
       extension = {
         foo = "fooscript",
       },
@@ -36,37 +76,52 @@ return {
         [".*/etc/foo/.*"] = "fooscript",
       },
     },
-    -- vim options can be configured here
+
     options = {
-      opt = { -- vim.opt.<key>
-        relativenumber = true, -- sets vim.opt.relativenumber
-        number = true, -- sets vim.opt.number
-        spell = false, -- sets vim.opt.spell
-        signcolumn = "yes", -- sets vim.opt.signcolumn to yes
-        wrap = false, -- sets vim.opt.wrap
+      opt = {
+        relativenumber = true,
+        number = true,
+        spell = false,
+        signcolumn = "yes",
+        wrap = false,
+
+        background = "dark",
+        termguicolors = true,
+
+        -- The reference has no full-width current-line highlight.
+        cursorline = false,
+
+        -- AstroNvim's statusline already displays NORMAL/VISUAL/INSERT.
+        showmode = false,
+
+        -- Block cursor in Normal/Visual mode; vertical cursor in Insert mode.
+        guicursor = table.concat({
+          "n-v-c:block-Cursor",
+          "i-ci-ve:ver25-Cursor",
+          "r-cr:hor20-Cursor",
+          "o:hor50-Cursor",
+        }, ","),
       },
-      g = { -- vim.g.<key>
-        -- configure global vim variables (vim.g)
-        -- NOTE: `mapleader` and `maplocalleader` must be set in the AstroNvim opts or before `lazy.setup`
-        -- This can be found in the `lua/lazy_setup.lua` file
-      },
+
+      g = {},
     },
-    -- Mappings can be configured through AstroCore as well.
-    -- NOTE: keycodes follow the casing in the vimdocs. For example, `<Leader>` must be capitalized
+
     mappings = {
-      -- first key is the mode
       n = {
-        -- second key is the lefthand side of the map
+        ["]b"] = {
+          function() require("astrocore.buffer").nav(vim.v.count1) end,
+          desc = "Next buffer",
+        },
+        ["[b"] = {
+          function() require("astrocore.buffer").nav(-vim.v.count1) end,
+          desc = "Previous buffer",
+        },
 
-        -- navigate buffer tabs
-        ["]b"] = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
-        ["[b"] = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },
+        ["<Leader>gg"] = {
+          function() require("neogit").open() end,
+          desc = "Neogit",
+        },
 
-        -- override AstroNvim's default lazygit mapping to use Neogit instead;
-        -- <Leader>tl is left as AstroNvim's default (ToggleTerm lazygit) for comparison
-        ["<Leader>gg"] = { function() require("neogit").open() end, desc = "Neogit" },
-
-        -- mappings seen under group name "Buffer"
         ["<Leader>bd"] = {
           function()
             require("astroui.status.heirline").buffer_picker(
@@ -75,14 +130,8 @@ return {
           end,
           desc = "Close buffer from tabline",
         },
-
-        -- tables with just a `desc` key will be registered with which-key if it's installed
-        -- this is useful for naming menus
-        -- ["<Leader>b"] = { desc = "Buffers" },
-
-        -- setting a mapping to false will disable it
-        -- ["<C-S>"] = false,
       },
     },
   },
 }
+
